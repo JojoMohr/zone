@@ -16,7 +16,7 @@ body {
     grid-template-rows: 2fr 10fr 1fr;
     height: 500px;
     width: 300px;
-    /* overflow: hidden; */
+    overflow: hidden;
     background-color: #b7ffd8;
     border: #b7ffd8 solid 2px;
     /* border-radius: 10px; */
