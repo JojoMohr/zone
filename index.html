@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ChromeExtension</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="icon" type="image/png" href="icons/logo.png" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+
+    <body>
+        <div id="appWrapper">
+            <div class="header">
+                <button id="mute">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 0 24 24"
+                        width="24px"
+                        fill="#000000"
+                    >
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M4.34 2.93L2.93 4.34 7.29 8.7 7 9H3v6h4l5 5v-6.59l4.18 4.18c-.65.49-1.38.88-2.18 1.11v2.06c1.34-.3 2.57-.92 3.61-1.75l2.05 2.05 1.41-1.41L4.34 2.93zM10 15.17L7.83 13H5v-2h2.83l.88-.88L10 11.41v3.76zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8l-1.88 1.88L12 7.76zm4.5 8c0-1.77-1.02-3.29-2.5-4.03v1.79l2.48 2.48c.01-.08.02-.16.02-.24z"
+                        />
+                    </svg>
+                </button>
+
+                <div id="logo"><img src="icons/logo.png" alt="Logo" /></div>
+                <button id="close">X</button>
+            </div>
+            <div class="slides">
+                <div class="soundgrid">
+                    <div class="sound">
+                        <div id="tree" class="icon">
+                            <img src="icons/baum.png" alt="Tree" />
+                        </div>
+                        <div class="sliderwrapper">
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="30"
+                                class="slider"
+                                id="volTree"
+                            />
+                        </div>
+                    </div>
+                    <div class="sound">
+                        <div class="icon">
+                            <img id="fire" src="icons/fire.png" alt="" />
+                        </div>
+
+                        <div class="sliderwrapper">
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="30"
+                                class="slider"
+                                id="volFire"
+                            />
+                        </div>
+                    </div>
+                    <div class="sound">
+                        <div id="leave" class="icon">
+                            <img src="icons/leave.png" alt="" />
+                        </div>
+
+                        <div class="sliderwrapper">
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="30"
+                                class="slider"
+                                id="volLeave"
+                            />
+                        </div>
+                    </div>
+                    <div class="sound">
+                        <div id="note" class="icon">
+                            <img src="icons/note.png" alt="" />
+                        </div>
+
+                        <div class="sliderwrapper">
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="30"
+                                class="slider"
+                                id="volWhite"
+                            />
+                        </div>
+                    </div>
+                    <div class="sound">
+                        <div id="rain" class="icon">
+                            <img src="icons/rain.png" alt="" />
+                        </div>
+
+                        <div class="sliderwrapper">
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="30"
+                                class="slider"
+                                id="volRain"
+                            />
+                        </div>
+                    </div>
+                    <div class="sound">
+                        <div id="water" class="icon">
+                            <img src="icons/water.png" alt="" />
+                        </div>
+
+                        <div class="sliderwrapper">
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="30"
+                                class="slider myRange"
+                                id="volWater"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="slide2">
+                    <div class="todolist">
+                        <h2 id="todoHeading">GET STUFF DONE!</h2>
+                        <div class="inputWrapper">
+                            <input
+                                id="todoinput"
+                                type="text"
+                                placeholder="Add your TODO..."
+                            />
+                            <button id="addbutton">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    enable-background="new 0 0 24 24"
+                                    height="24px"
+                                    viewBox="0 0 24 24"
+                                    width="24px"
+                                    fill="#000000"
+                                >
+                                    <rect fill="none" height="24" width="24" />
+                                    <path
+                                        d="M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M12,20c-4.41,0-8-3.59-8-8s3.59-8,8-8 c1.57,0,3.04,0.46,4.28,1.25l1.45-1.45C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12s4.48,10,10,10c1.73,0,3.36-0.44,4.78-1.22 l-1.5-1.5C14.28,19.74,13.17,20,12,20z M19,15h-3v2h3v3h2v-3h3v-2h-3v-3h-2V15z"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <button id="clearbutton">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="24px"
+                                viewBox="0 0 24 24"
+                                width="24px"
+                                fill="#000000"
+                            >
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path
+                                    d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"
+                                />
+                            </svg>
+                        </button>
+                        <div id="todoswrapper"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <button id="left" class="navbutton">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 0 24 24"
+                        width="24px"
+                        fill="#000000"
+                    >
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z"
+                        />
+                    </svg>
+                </button>
+                <div id="dotwrapper">
+                    <div class="dot selected" id="dot1"></div>
+                    <div class="dot" id="dot2"></div>
+                    <!-- <div class="dot" id="dot3"></div> -->
+                </div>
+                <button id="right" class="navbutton">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 0 24 24"
+                        width="24px"
+                        fill="#000000"
+                    >
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                            d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="script.js"></script>
+        <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" /> -->
+    </body>
+</html>
+
+<span
+    class="MuiSlider-thumb MuiSlider-thumbColorPrimary"
+    tabindex="0"
+    role="slider"
+    data-index="0"
+    aria-orientation="horizontal"
+    aria-valuemax="1"
+    aria-valuemin="0.0001"
+    aria-valuenow="0.55"
+    style="left: 54.9955%"
+></span>

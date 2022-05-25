@@ -1,0 +1,18 @@
+{
+    "name": "zone",
+    "version": "1.0.0",
+    "description": "App to help you focus with background noises and a To-Do list",
+    "manifest_version": 3,
+    "author": "Johannes Mohr ",
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "zone"
+    },
+    "icons": {
+        "128": "icon128.png"
+    },
+
+    "background": {
+        "service_worker": "script.js"
+    }
+}

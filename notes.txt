@@ -1,0 +1,17 @@
+chrome://extensions
+
+MANIFEST INFORMATION 
+
+ICON 
+Here's an example of how to declare the icons in the manifest:
+
+ "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
+
+Since manifest 3, anonymous functions are not allowed (neither in background).
+Jquery.js file usually has anonymous functions You should set a name to them.

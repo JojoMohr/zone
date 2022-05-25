@@ -1,0 +1,313 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 500px;
+    width: 300px;
+    overflow: hidden;
+    /* background-color: #8bfdbfc5; */
+    margin: 0;
+    border-radius: 10px;
+}
+
+#appWrapper {
+    display: grid;
+    grid-template-rows: 2fr 10fr 1fr;
+    height: 500px;
+    width: 300px;
+    /* overflow: hidden; */
+    background-color: #b7ffd8;
+    border: #b7ffd8 solid 2px;
+    /* border-radius: 10px; */
+    margin: 0px;
+}
+
+.header {
+    /* background-color: #9dfac7; */
+    /* background-image: linear-gradient(#ffbba5ba, #b7ffd8); */
+    background-image: linear-gradient(#b7ffd8, #b7ffd8);
+    width: 296px;
+    display: inline-flex;
+    overflow: hidden;
+    justify-content: space-between;
+    align-content: space-between;
+    padding: 50px;
+    border-radius: 6px;
+    align-items: center;
+    /* border: #74f0ac 2px solid; */
+    border-bottom: white solid 1px;
+}
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+#mute {
+    font-size: 20px;
+    display: flex;
+}
+
+#logo {
+    display: flex;
+    height: 65px;
+    width: 65px;
+    overflow: hidden;
+    /* border: solid white 2px; */
+    border-radius: 10px;
+}
+
+.navbutton {
+    display: flex;
+    background-color: transparent;
+    border: white 2px solid;
+    font-size: 20px;
+}
+
+.soundgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    flex-flow: wrap;
+    gap: 1em;
+    /* border: #74f0ac 2px solid; */
+}
+
+.slides {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 600px;
+}
+
+.slide2 {
+    width: 300px;
+    padding: 5px;
+}
+
+.todolist {
+    width: 100%;
+}
+
+.sound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    gap: 5%;
+    height: 100px;
+    width: 100px;
+}
+
+.icon {
+    display: flex;
+    height: 80px;
+    width: 80px;
+    overflow: hidden;
+    justify-content: center;
+    border: white solid 2px;
+    border-radius: 10px;
+    opacity: 90%;
+    background-color: rgba(255, 255, 255, 0.354);
+    border: white solid 1px;
+}
+
+.icon:active {
+    opacity: 30%;
+}
+
+button:active {
+    opacity: 70%;
+}
+
+.icon:hover {
+    animation: popout 1s ease;
+    border: white 3px solid;
+    cursor: pointer;
+}
+
+@keyframes popout {
+    from {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(115%);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.sliderwrapper {
+    bottom: 0%;
+    height: 30px;
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    background-color: white;
+    height: 2px;
+    border-radius: 10px;
+    outline: none;
+    width: 95px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px white solid;
+    background: #ffbca5;
+    cursor: pointer;
+}
+
+.slider:hover {
+    background: #6e6e6e;
+}
+
+.footer {
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #b7ffd8;
+    width: 48%;
+    /* border: #74f0ac 2px solid; */
+    border-top: white solid 2px;
+}
+
+#dotwrapper {
+    position: relative;
+    display: inline-flex;
+    gap: 5px;
+}
+
+.dot {
+    border: white 3px solid;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+}
+
+.selected {
+    background-color: white;
+}
+
+button {
+    color: white;
+    font-weight: bold;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    /* border: white 2px solid; */
+    border: white solid 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 40%;
+    height: 30px;
+    width: 35px;
+}
+
+/* Hier könnte man auch überlegen, 
+mit classen wie moveleft-400 moveleft-800 moveleft-1200 
+und diese klassen dann anstelle von on off zu benutzten */
+
+.left {
+    transform: translateX(-300px);
+    transition: 0.5s;
+    /* left: 0; */
+}
+
+.right {
+    transform: translateX(0px);
+    transition: 0.5s;
+    /* right: 0; */
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    animation: popout 1s ease;
+    border: white 3px solid;
+}
+
+#addbutton {
+    width: 40px;
+    height: 30px;
+    /* border: black 2px solid; */
+    color: black;
+}
+
+.inputWrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 5fr;
+    gap: 10px;
+}
+
+#clearbutton {
+    width: 40px;
+    height: 30px;
+    position: relative;
+    right: 25px;
+    top: -29px;
+    float: right;
+    color: black;
+}
+
+#todoswrapper {
+    overflow: scroll;
+    margin-top: 20px;
+    height: 220px;
+    width: 285px;
+    border: solid white 1px;
+    border-radius: 5%;
+    background-color: rgba(255, 255, 255, 0.37);
+}
+
+#todoHeading {
+    display: flex;
+    width: 98%;
+    justify-content: center;
+    font-family: "Space Mono", monospace;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.598);
+}
+
+.todo {
+    font-size: 15px;
+    font-weight: bold;
+    font-style: unset;
+    padding-left: 10px;
+    font-family: "Space Mono", monospace;
+}
+
+#todoinput {
+    border: white 3px solid;
+    height: 30px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.598);
+}
+
+.todobox {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox {
+    /* -webkit-appearance: none; */
+    border: white 2px solid;
+    height: 15px;
+    width: 15px;
+}
+
+/* .checked {
+    background-color: tomato;
+    height: 10px;
+    width: 10px;
+} */
