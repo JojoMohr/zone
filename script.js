@@ -173,48 +173,50 @@
     // }
 
     /////// TODOLISTE
-    counter = 0;
-
-    let todoInput = $("#todoinput");
-    // let todoInput = document.querySelector("#todoinput");
 
     // let todoswrapper = $("#todoswrapper");
-
+    let todoInput = document.querySelector("#todoinput");
     let todoswrapper = document.querySelector("#todoswrapper");
-    todoInput.on("keydown", function (e) {
-        if (e.keyCode === 13 && todoInput.val() !== "") {
-            // counter++;
-            console.log(counter);
-            if (counter <= 11) {
-                todoswrapper.innerHTML += `<div class="todobox">
-                    <p class="todo">♥  ${todoInput.val()} </p> 
-                    <input class="checkbox" type="checkbox" />
-                </div>`;
-                todoInput.val("");
-            } else {
-                console.log("TO MANY TODOS");
-                return;
-            }
+    todoInput.addEventListener("keydown", function (e) {
+        let div = document.createElement("div");
+        let p = document.createElement("p");
+        let text = document.createTextNode(`♥  ${todoInput.value}`);
+        let input = document.createElement("input");
+
+        p.classList.add("todo");
+        div.classList.add("todobox");
+        input.classList.add("checkbox");
+        input.setAttribute("type", "checkbox");
+
+        p.appendChild(text);
+        div.appendChild(p);
+        div.appendChild(input);
+
+        if (e.keyCode === 13 && todoInput.value !== "") {
+            todoswrapper.appendChild(div);
+            todoInput.value = "";
         }
     });
 
     let addButton = document.querySelector("#addbutton");
 
     addButton.addEventListener("click", function () {
-        if (todoInput.val() !== "") {
-            // counter++;
-            console.log(counter);
-            console.log("ADD");
-            if (counter <= 11 || todoInput.val == "") {
-                todoswrapper.innerHTML += `<div class="todobox">
-            <p class="todo">♥  ${todoInput.val()} </p> 
-           <input class="checkbox" type="checkbox" />
-            </div>`;
-                todoInput.val("");
-            } else {
-                console.log("TO MANY TODOS");
-                return;
-            }
+        let div = document.createElement("div");
+        let p = document.createElement("p");
+        let text = document.createTextNode(`♥  ${todoInput.value}`);
+        let input = document.createElement("input");
+
+        p.classList.add("todo");
+        div.classList.add("todobox");
+        input.classList.add("checkbox");
+        input.setAttribute("type", "checkbox");
+
+        p.appendChild(text);
+        div.appendChild(p);
+        div.appendChild(input);
+        if (todoInput.value !== "") {
+            todoswrapper.appendChild(div);
+            todoInput.value = "";
         }
     });
 
@@ -223,7 +225,7 @@
         console.log("REMOVE");
         todoswrapper.innerHTML = "";
         counter = 0;
-        todoInput.val("");
+        todoInput.value = "";
     });
 
     ////CHECKBOX
