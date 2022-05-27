@@ -11,9 +11,16 @@
     "icons": {
         "128": "icon128.png"
     },
-
     "background": {
-        "service_worker": "script.js"
+        "service_worker": "background.js",
+        "type": "module"
     },
-    "permissions": ["storage", "activeTab", "contextMenus"]
+    "permissions": [
+        "storage",
+        "contextMenus",
+        "scripting",
+        "activeTab",
+        "tabs",
+        "background"
+    ]
 }
