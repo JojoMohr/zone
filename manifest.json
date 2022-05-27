@@ -18,7 +18,7 @@
     "permissions": ["storage", "activeTab", "tabs", "background", "http://*/*"],
     "content_scripts": [
         {
-            "matches": ["http://*/*"],
+            "matches": ["<all_urls>"],
             "js": ["content.js"]
         }
     ]
