@@ -1,58 +1,20 @@
-//== TRACK URL =================================
-// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-//     if (changeInfo.status === "complete" && /^http/.test(tab.url)) {
-//     }
-//     console.log("URL READER IS WORKING");
-// });
+console.log("BG script is LOGGING");
 
-// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-//     if (changeInfo.status === "complete" && /^http/.test(tab.url)) {
-//         chrome.scripting
-//             .executeScript({
-//                 target: { tabId: tabId },
-//                 files: ["./foreground.js"],
-//             })
-//             .then(() => {
-//                 console.log("INJECTED THE FOREGROUND SCRIPT.");
-//             })
-//             .catch((err) => console.log(err));
-//     }
-// });
+//============SERVICE WORKER ===========================================
+chrome.runtime.onInstalled.addListener(() => {
+    console.log("This is coming from BG script");
+});
 
-// Notice the 'if' clause. If the web page the user is viewing
-// is fully loaded(complete) AND it's an actual web page(http),
-// then we do something.
+//======================================================
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log("REQUEST: ", request);
+    // treeSound.play();
+});
 
-///=========SETTING LOCAL STORAGE================================================
-
-// chrome.storage.local.set({
-//     name: "audio"
-// }, function ());
-
-// getting state
-// chrome.storage.local.get("name", function (retrieved_data));
-
-//========PLAY AUDIO IN BACKGROUND==============================================
-
-// setTimeout(() => {
-//     ping(serviceWorker);
-// }, 1000);
-
-// chrome.action.onClicked.addListener((tab) => {
-//     executeScript(tab);
-
-//     let origin = new URL(tab.url).origin;
-//     logExtensionInvocation(origin);
-//     if (shouldPromtForAutorun(origin)) {
-//         requestPermission(origin);
-//     }
-// });
-
-//================================================================
-// (function () {
+//======================================================
+// // (function () {
 let mute = document.querySelector("#mute");
 let right = document.querySelector("#right");
-// let close = document.querySelector("#close");
 let tree = document.querySelector("#tree");
 let fire = document.querySelector("#fire");
 let white = document.querySelector("#note");
@@ -83,6 +45,15 @@ let audio = [
     rainSound,
     waterSound,
 ];
+
+// const audio = {
+//     treeSound: new Audio("sounds/rainforest-audio.mp3"),
+//     fireSound: new Audio("sounds/bonfire-audio.wav"),
+//     leaveSound: new Audio("sounds/morning-atmo.wav"),
+//     whiteNoise: new Audio("sounds/white-noise.wav"),
+//     rainSound: new Audio("sounds/rain-audio.mp3"),
+//     waterSound: new Audio("sounds/water-audio.mp3"),
+// };
 
 //  LOOP SOUNDS ///////////////////////////////
 
@@ -193,7 +164,7 @@ water.addEventListener("click", function () {
         waterSound.currentTime = 0;
     }
 });
-////  NAVBAR
+//  NAVBAR
 
 /* Update the variable keeping track of the current slide. */
 // cur = next;
@@ -215,11 +186,11 @@ left.addEventListener("click", function () {
     dot1.classList.add("selected");
 });
 
-// if (soundgrid.classList.contains("on")) {
-//     slide2.classList.add("off");
-// } else {
-//     slide2.classList.add("on");
-// }
+if (soundgrid.classList.contains("on")) {
+    slide2.classList.add("off");
+} else {
+    slide2.classList.add("on");
+}
 
 /////// TODOLISTE
 
@@ -277,13 +248,13 @@ clearButton.addEventListener("click", function () {
     todoInput.value = "";
 });
 
-////CHECKBOX
-// let checkbox = document.querySelector(".checkbox");
-// checkbox.addEventListener("change", function(e) {
-//     if (checkbox.checked) {
-//         e.target.console.log("Checkbox is checked..");
-//     } else {
-//         console.log("Checkbox is not checked..");
-//     }
-// });
+//CHECKBOX
+let checkbox = document.querySelector(".checkbox");
+checkbox.addEventListener("change", function (e) {
+    if (checkbox.checked) {
+        e.target.console.log("Checkbox is checked..");
+    } else {
+        console.log("Checkbox is not checked..");
+    }
+});
 // })();
