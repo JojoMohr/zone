@@ -1,65 +1,111 @@
-console.log("BG script is LOGGING", document);
-
 //============SERVICE WORKER ===========================================
 chrome.runtime.onInstalled.addListener(() => {
     console.log("This is coming from BG script");
 });
 
 //======================================================
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log("REQUEST: ", request);
-    request.treeSound.play();
-});
 
+let mute = document.querySelector("#mute");
+let right = document.querySelector("#right");
+let tree = document.querySelector("#tree");
+let fire = document.querySelector("#fire");
+let white = document.querySelector("#note");
+let leave = document.querySelector("#leave");
+let rain = document.querySelector("#rain");
+let water = document.querySelector("#water");
+let soundgrid = document.querySelector(".soundgrid");
+let slide2 = document.querySelector(".slide2");
+let slides = document.querySelector(".slides");
+
+let dot1 = document.querySelector("#dot1");
+let dot2 = document.querySelector("#dot2");
+// let dot3 = document.querySelector("#dot3");
 //======================================================
 
-// let mute = document.querySelector("#mute");
-// let right = document.querySelector("#right");
-// let tree = document.querySelector("#tree");
-// let fire = document.querySelector("#fire");
-// let white = document.querySelector("#note");
-// let leave = document.querySelector("#leave");
-// let rain = document.querySelector("#rain");
-// let water = document.querySelector("#water");
-// let soundgrid = document.querySelector(".soundgrid");
-// let slide2 = document.querySelector(".slide2");
-// let slides = document.querySelector(".slides");
+//  SOUNDS /////////////////////////////////////
+let treeSound = new Audio("sounds/rainforest-audio.mp3");
+let fireSound = new Audio("sounds/bonfire-audio.wav");
+let leaveSound = new Audio("sounds/morning-atmo.wav");
+let whiteNoise = new Audio("sounds/white-noise.wav");
+let rainSound = new Audio("sounds/rain-audio.mp3");
+let waterSound = new Audio("sounds/water-audio.mp3");
 
-// let dot1 = document.querySelector("#dot1");
-// let dot2 = document.querySelector("#dot2");
-// // let dot3 = document.querySelector("#dot3");
+let audio = [
+    treeSound,
+    fireSound,
+    leaveSound,
+    whiteNoise,
+    rainSound,
+    waterSound,
+];
 
-// // SOUNDS /////////////////////////////////////
-// let treeSound = new Audio("sounds/rainforest-audio.mp3");
-// let fireSound = new Audio("sounds/bonfire-audio.wav");
-// let leaveSound = new Audio("sounds/morning-atmo.wav");
-// let whiteNoise = new Audio("sounds/white-noise.wav");
-// let rainSound = new Audio("sounds/rain-audio.mp3");
-// let waterSound = new Audio("sounds/water-audio.mp3");
+for (let i = 0; i < audio.length; i++) {
+    audio[i].loop = true;
+}
 
-// let audio = [
-//     treeSound,
-//     fireSound,
-//     leaveSound,
-//     whiteNoise,
-//     rainSound,
-//     waterSound,
-// ];
+var buttonClicked = false;
 
-// // const audio = {
-// //     treeSound: new Audio("sounds/rainforest-audio.mp3"),
-// //     fireSound: new Audio("sounds/bonfire-audio.wav"),
-// //     leaveSound: new Audio("sounds/morning-atmo.wav"),
-// //     whiteNoise: new Audio("sounds/white-noise.wav"),
-// //     rainSound: new Audio("sounds/rain-audio.mp3"),
-// //     waterSound: new Audio("sounds/water-audio.mp3"),
-// // };
+////===================MUTE =============================
 
-// //  LOOP SOUNDS ///////////////////////////////
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log("REQUEST MUTE: ", request);
+    if (request == "mute") {
+        if (buttonClicked === false) {
+            for (let i = 0; i < audio.length; i++) {
+                audio[i].volume = 0;
+            }
+            buttonClicked = true;
+        } else if (buttonClicked === true) {
+            for (let i = 0; i < audio.length; i++) {
+                audio[i].volume = 0.5;
+            }
+            buttonClicked = false;
+        }
+    }
+});
+//===================PAUSE PLAY SOUND =============================
+var soundPlaying = false;
 
-// for (let i = 0; i < audio.length; i++) {
-//     audio[i].loop = true;
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    // console.log("REQUEST: ", request);
+    if (request.sound != "tree") return;
+
+    if (request.sound == "tree" && treeSound.paused) {
+        console.log("BG  TREE PLAYING");
+        treeSound.play();
+    } else {
+        treeSound.pause();
+        console.log("BG  TREE PAUSE");
+        treeSound.currentTime = 0;
+    }
+});
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.sound != "fire") return;
+
+    if (request.sound == "fire" && fireSound.paused) {
+        fireSound.play();
+        console.log("BG  FIRE PLAYING");
+    } else {
+        fireSound.pause();
+        fireSound.currentTime = 0;
+    }
+});
+
+// if (request.sound == "leave") {
+//     leaveSound.play();
 // }
+// if (request.sound == "white") {
+//     whiteNoise.play();
+// }
+// if (request.sound == "rain") {
+//     rainSound.play();
+// }
+// if (request.sound == "water") {
+//     waterSound.play();
+// }
+//=========================================================
+
+
 
 // // ADJUST VOLUME //////////////////////////////
 // let volTree = document.querySelector("#volTree");

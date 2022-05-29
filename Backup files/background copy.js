@@ -1,44 +1,48 @@
-// // console.log("content.js is LOGGING");
+//============SERVICE WORKER ===========================================
+chrome.runtime.onInstalled.addListener(() => {
+    console.log("This is coming from BG script");
+});
 
-// // let mute = document.querySelector("#mute");
-// // let right = document.querySelector("#right");
-// // let tree = document.querySelector("#tree");
-// // let fire = document.querySelector("#fire");
-// // let white = document.querySelector("#note");
-// // let leave = document.querySelector("#leave");
-// // let rain = document.querySelector("#rain");
-// // let water = document.querySelector("#water");
-// // let soundgrid = document.querySelector(".soundgrid");
-// // let slide2 = document.querySelector(".slide2");
-// // let slides = document.querySelector(".slides");
+//======================================================
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    console.log("REQUEST: ", request);
+    request.treeSound.play();
+});
 
-// // let dot1 = document.querySelector("#dot1");
-// // let dot2 = document.querySelector("#dot2");
-// // // let dot3 = document.querySelector("#dot3");
+//======================================================
 
-// // // SOUNDS /////////////////////////////////////
-// // let treeSound = new Audio("sounds/rainforest-audio.mp3");
-// // let fireSound = new Audio("sounds/bonfire-audio.wav");
-// // let leaveSound = new Audio("sounds/morning-atmo.wav");
-// // let whiteNoise = new Audio("sounds/white-noise.wav");
-// // let rainSound = new Audio("sounds/rain-audio.mp3");
-// // let waterSound = new Audio("sounds/water-audio.mp3");
+// let mute = document.querySelector("#mute");
+// let right = document.querySelector("#right");
+// let tree = document.querySelector("#tree");
+// let fire = document.querySelector("#fire");
+// let white = document.querySelector("#note");
+// let leave = document.querySelector("#leave");
+// let rain = document.querySelector("#rain");
+// let water = document.querySelector("#water");
+// let soundgrid = document.querySelector(".soundgrid");
+// let slide2 = document.querySelector(".slide2");
+// let slides = document.querySelector(".slides");
 
-// // let audio = [
-// //     treeSound,
-// //     fireSound,
-// //     leaveSound,
-// //     whiteNoise,
-// //     rainSound,
-// //     waterSound,
-// // ];
+// let dot1 = document.querySelector("#dot1");
+// let dot2 = document.querySelector("#dot2");
+// // let dot3 = document.querySelector("#dot3");
 
-// // chrome.runtime.sendMessage(
-// //     { greeting: "hello", treeSound },
-// //     function (response) {
-// //         console.log(response);
-// //     }
-// // );
+// SOUNDS /////////////////////////////////////
+// let treeSound = new Audio("sounds/rainforest-audio.mp3");
+// let fireSound = new Audio("sounds/bonfire-audio.wav");
+// let leaveSound = new Audio("sounds/morning-atmo.wav");
+// let whiteNoise = new Audio("sounds/white-noise.wav");
+// let rainSound = new Audio("sounds/rain-audio.mp3");
+// let waterSound = new Audio("sounds/water-audio.mp3");
+
+// let audio = [
+//     treeSound,
+//     fireSound,
+//     leaveSound,
+//     whiteNoise,
+//     rainSound,
+//     waterSound,
+// ];
 
 // // const audio = {
 // //     treeSound: new Audio("sounds/rainforest-audio.mp3"),
@@ -242,12 +246,12 @@
 //     todoInput.value = "";
 // });
 
-// // //CHECKBOX
-// // // let checkbox = document.querySelector(".checkbox");
-// // // checkbox.addEventListener("change", function (e) {
-// // //     if (checkbox.checked) {
-// // //         e.target.console.log("Checkbox is checked..");
-// // //     } else {
-// // //         console.log("Checkbox is not checked..");
-// // //     }
-// // // });
+// //CHECKBOX
+// // let checkbox = document.querySelector(".checkbox");
+// // checkbox.addEventListener("change", function (e) {
+// //     if (checkbox.checked) {
+// //         e.target.console.log("Checkbox is checked..");
+// //     } else {
+// //         console.log("Checkbox is not checked..");
+// //     }
+// // });
