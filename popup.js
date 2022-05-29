@@ -1,11 +1,5 @@
 console.log("POPUP IS LOOGGING");
 
-
-
-// chrome.runtime.sendMessage({ greeting: "hello" }, function (response) {
-//     console.log(response);
-// });
-
 let mute = document.querySelector("#mute");
 let right = document.querySelector("#right");
 let tree = document.querySelector("#tree");
@@ -22,66 +16,10 @@ let dot1 = document.querySelector("#dot1");
 let dot2 = document.querySelector("#dot2");
 // let dot3 = document.querySelector("#dot3");
 
-// SOUNDS /////////////////////////////////////
-let treeSound = new Audio("sounds/rainforest-audio.mp3");
-let fireSound = new Audio("sounds/bonfire-audio.wav");
-let leaveSound = new Audio("sounds/morning-atmo.wav");
-let whiteNoise = new Audio("sounds/white-noise.wav");
-let rainSound = new Audio("sounds/rain-audio.mp3");
-let waterSound = new Audio("sounds/water-audio.mp3");
-
-let audio = [
-    treeSound,
-    fireSound,
-    leaveSound,
-    whiteNoise,
-    rainSound,
-    waterSound,
-];
-
-
-//  LOOP SOUNDS ///////////////////////////////
-
-for (let i = 0; i < audio.length; i++) {
-    audio[i].loop = true;
-}
-
-// ADJUST VOLUME //////////////////////////////
-let volTree = document.querySelector("#volTree");
-volTree.addEventListener("input", function (e) {
-    treeSound.volume = e.currentTarget.value / 100;
-});
-
-let volFire = document.querySelector("#volFire");
-volFire.addEventListener("input", function (e) {
-    fireSound.volume = e.currentTarget.value / 100;
-});
-
-let volWhite = document.querySelector("#volWhite");
-volWhite.addEventListener("input", function (e) {
-    whiteNoise.volume = e.currentTarget.value / 100;
-});
-
-let volLeave = document.querySelector("#volLeave");
-volLeave.addEventListener("input", function (e) {
-    leaveSound.volume = e.currentTarget.value / 100;
-});
-
-let volRain = document.querySelector("#volRain");
-volRain.addEventListener("input", function (e) {
-    rainSound.volume = e.currentTarget.value / 100;
-});
-
-let volWater = document.querySelector("#volWater");
-volWater.addEventListener("input", function (e) {
-    waterSound.volume = e.currentTarget.value / 100;
-});
-
 ////===================MUTE =============================
 
 mute.addEventListener("click", function () {
-     chrome.runtime.sendMessage("mute");
-
+    chrome.runtime.sendMessage("mute");
 });
 
 ////===================PAUSE PLAY SOUND =============================
@@ -95,80 +33,21 @@ buttons.forEach(function (button) {
     });
 });
 
+////================================================
 
-
-// var buttonClicked = false;
-
-// mute.addEventListener("click", function () {
-//     if (buttonClicked === false) {
-//         for (let i = 0; i < audio.length; i++) {
-//             audio[i].volume = 0;
-//         }
-//         buttonClicked = true;
-//     } else if (buttonClicked === true) {
-//         for (let i = 0; i < audio.length; i++) {
-//             audio[i].volume = 0.5;
-//         }
-//         buttonClicked = false;
-//     }
-// });
-
-// EVENT LISTENERS ////////////////////////////
-//// SOUNDS
-// tree.addEventListener("click", function () {
-//     if (treeSound.paused) {
-//         treeSound.play();
-//         console.log("tree Plays");
-//     } else {
-//         treeSound.pause();
-//         console.log("tree stops");
-
-//         treeSound.currentTime = 0;
-//     }
-// });
-
-// fire.addEventListener("click", function () {
-//     if (fireSound.paused) {
-//         fireSound.play();
-//         console.log("fire Plays");
-//     } else {
-//         fireSound.pause();
-//         console.log("fire stop");
-//         fireSound.currentTime = 0;
-//     }
-// });
-white.addEventListener("click", function () {
-    if (whiteNoise.paused) {
-        whiteNoise.play();
-    } else {
-        whiteNoise.pause();
-        whiteNoise.currentTime = 0;
-    }
+const volSlider = document.querySelectorAll(".slider");
+volSlider.forEach(function (slider) {
+    slider.addEventListener("input", function (e) {
+        console.log("SLIDER", this.id);
+        // const sliderOf = this.id;
+        sliderVol = e.currentTarget.value / 100;
+        chrome.runtime.sendMessage({
+            setVol: sliderVol,
+            singleSlider: this.id,
+        });
+    });
 });
-leave.addEventListener("click", function () {
-    if (leaveSound.paused) {
-        leaveSound.play();
-    } else {
-        leaveSound.pause();
-        leaveSound.currentTime = 0;
-    }
-});
-rain.addEventListener("click", function () {
-    if (rainSound.paused) {
-        rainSound.play();
-    } else {
-        rainSound.pause();
-        rainSound.currentTime = 0;
-    }
-});
-water.addEventListener("click", function () {
-    if (waterSound.paused) {
-        waterSound.play();
-    } else {
-        waterSound.pause();
-        waterSound.currentTime = 0;
-    }
-});
+
 //  NAVBAR
 
 /* Update the variable keeping track of the current slide. */
@@ -245,10 +124,10 @@ addButton.addEventListener("click", function () {
     }
 });
 
-// let clearButton = document.querySelector("#clearbutton");
-// clearButton.addEventListener("click", function () {
-//     console.log("REMOVE");
-//     todoswrapper.innerHTML = "";
-//     counter = 0;
-//     todoInput.value = "";
-// });
+let clearButton = document.querySelector("#clearbutton");
+clearButton.addEventListener("click", function () {
+    console.log("REMOVE");
+    todoswrapper.innerHTML = "";
+    counter = 0;
+    todoInput.value = "";
+});
