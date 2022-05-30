@@ -172,4 +172,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
+//================LOCAL STORAGE=========================================
 
+chrome.storage.sync.get(["todo"], function (result) {
+    console.log("Todo currently is ", result.key);
+});

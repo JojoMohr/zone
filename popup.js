@@ -97,6 +97,14 @@ todoInput.addEventListener("keydown", function (e) {
     div.appendChild(input);
 
     if (e.keyCode === 13 && todoInput.value !== "") {
+        try {
+            chrome.storage.local.set({ key: text }, function () {
+                console.log("Todo is set to ", text);
+            });
+        } catch (error) {
+            console.log("ERROR IN CATCH", error);
+        }
+
         todoswrapper.appendChild(div);
         todoInput.value = "";
     }
@@ -109,6 +117,10 @@ addButton.addEventListener("click", function () {
     let p = document.createElement("p");
     let text = document.createTextNode(`♥  ${todoInput.value}`);
     let input = document.createElement("input");
+
+    chrome.storage.local.set({ todo: "TODO" }, function () {
+        console.log("Todo is set to ", text);
+    });
 
     p.classList.add("todo");
     div.classList.add("todobox");
@@ -131,3 +143,27 @@ clearButton.addEventListener("click", function () {
     counter = 0;
     todoInput.value = "";
 });
+
+//================LOCAL STORAGE=========================================
+
+window.onload = function () {
+    chrome.storage.local.get(["key"], function (result) {
+        console.log("Value currently is ", result);
+    });
+};
+// let value = "FIRST TODO";
+// chrome.storage.sync.set({ key: "TODO" }, function () {
+//     console.log("Value is set to " + value);
+// });
+
+// chrome.storage.sync.get(["key"], function (result) {
+//     console.log("Value currently is " + result.key);
+// });
+// let value = "FIRST TODO";
+// chrome.storage.local.set({ todo: value }, function () {
+//     console.log("Value is set to " + value);
+// });
+
+// chrome.storage.local.get(["key"], function (result) {
+//     console.log("Value currently is " + result.key);
+// });
