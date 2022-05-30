@@ -33,8 +33,7 @@ function add() {
     return false;
 }
 function removee() {
-    var audio = new Audio("pencil.wav");
-    audio.play();
+ 
     var id = this.getAttribute("id");
     var todos = get_todos();
     todos.splice(id, 1);

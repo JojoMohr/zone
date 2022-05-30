@@ -90,8 +90,6 @@ let todoswrapper = document.querySelector("#todoswrapper");
 ///========= GET TODOS =====================================
 
 //==========================================================================
-
-//==========================================================================
 //=== TODOS ON PUPUOP=====
 let checkbox;
 function createTodoElement(todo) {
@@ -113,19 +111,14 @@ function createTodoElement(todo) {
 //==========================================================================
 
 //==========================================================================
-function getAllTodos() {
-    let allToDosInLocal = localStorage.getItem("todo")
-        ? JSON.parse(localStorage.getItem("todo"))
-        : [];
-    return allToDosInLocal;
-}
-getAllTodos();
+let allToDosInLocal = localStorage.getItem("todo")
+    ? JSON.parse(localStorage.getItem("todo"))
+    : [];
 
 let allToDos = [];
 //============= ADD TODO ON ENTER =========================
 todoInput.addEventListener("keydown", function (e) {
     let div = createTodoElement(todoInput.value);
-    let allToDosInLocal = getAllTodos();
     if (e.keyCode === 13 && todoInput.value !== "") {
         allToDos = [...allToDosInLocal, todoInput.value];
         console.log("allToDos:", allToDos);
@@ -143,10 +136,6 @@ addButton.addEventListener("click", function () {
     let p = document.createElement("p");
     let text = document.createTextNode(`♥  ${todoInput.value}`);
     let input = document.createElement("input");
-
-    // chrome.storage.local.set({ todo: "TODO 2" }, function () {
-    //     console.log("Todo is set to ", text);
-    // });
 
     p.classList.add("todo");
     div.classList.add("todobox");
@@ -172,19 +161,16 @@ clearButton.addEventListener("click", function () {
 });
 //================================================================
 function showTodos() {
-    let allToDosInLocal = getAllTodos();
-
     for (let i = 0; i < allToDosInLocal.length; i++) {
         let div = createTodoElement(allToDosInLocal[i]);
-        // console.log("ALLTODOS IN MAP TODOS", allToDosInLocal[i]);
         todoswrapper.appendChild(div);
         div.lastChild.addEventListener("click", function (e) {
-            storage.removeItem(e.target.parentNode);
-
             setTimeout(() => {
                 e.target.parentNode.remove();
             }, 500);
 
+            // allToDos.splice(e.target.parentNode, 1);
+            // localStorage.setItem("todo", JSON.stringify(allToDos));
             console.log("CLICKED ON CHECKBOC");
         });
         console.log("DIV", div.lastChild);
