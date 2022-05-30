@@ -1,5 +1,9 @@
 console.log("POPUP IS LOOGGING");
+chrome.storage.local.get(["todo"], function (text) {
+    console.log("Todo currently is ", text);
+});
 
+localStorage.setItem("TESTODO", "grey");
 let mute = document.querySelector("#mute");
 let right = document.querySelector("#right");
 let tree = document.querySelector("#tree");
@@ -77,7 +81,6 @@ if (soundgrid.classList.contains("on")) {
 }
 
 /////// TODOLISTE
-
 // let todoswrapper = $("#todoswrapper");
 let todoInput = document.querySelector("#todoinput");
 let todoswrapper = document.querySelector("#todoswrapper");
@@ -86,7 +89,7 @@ todoInput.addEventListener("keydown", function (e) {
     let p = document.createElement("p");
     let text = document.createTextNode(`♥  ${todoInput.value}`);
     let input = document.createElement("input");
-
+    // console.log(text);
     p.classList.add("todo");
     div.classList.add("todobox");
     input.classList.add("checkbox");
@@ -95,21 +98,34 @@ todoInput.addEventListener("keydown", function (e) {
     p.appendChild(text);
     div.appendChild(p);
     div.appendChild(input);
-
+    let allTodosFromLocal = localStorage.getItem("todo");
+    allTodosFromLocal = JSON.parse(allTodosFromLocal);
     if (e.keyCode === 13 && todoInput.value !== "") {
-        try {
-            chrome.storage.local.set({ key: text }, function () {
-                console.log("Todo is set to ", text);
-            });
-        } catch (error) {
-            console.log("ERROR IN CATCH", error);
-        }
+        console.log("ALL TODOS FROM LOCAL", allTodosFromLocal);
+
+        localStorage.setItem(
+            "todo",
+            JSON.stringify([...allTodosFromLocal, todoInput.value])
+        );
+        console.log("ALL TODOS", allTodosFromLocal);
+
+        // try {
+        //     chrome.storage.local.set({ todo: todoInput.value }, function () {
+        //         console.log("Todo is set to ", todoInput.value);
+        //         chrome.storage.local.get(["todo"], function (text) {
+        //             console.log("Todo currently is ", text);
+        //         });
+        //     });
+        // } catch (error) {
+        //     console.log("ERROR IN CATCH", error);
+        // }
 
         todoswrapper.appendChild(div);
         todoInput.value = "";
     }
 });
 
+//==============ADD BUTTON =============================
 let addButton = document.querySelector("#addbutton");
 
 addButton.addEventListener("click", function () {
@@ -118,9 +134,9 @@ addButton.addEventListener("click", function () {
     let text = document.createTextNode(`♥  ${todoInput.value}`);
     let input = document.createElement("input");
 
-    chrome.storage.local.set({ todo: "TODO" }, function () {
-        console.log("Todo is set to ", text);
-    });
+    // chrome.storage.local.set({ todo: "TODO 2" }, function () {
+    //     console.log("Todo is set to ", text);
+    // });
 
     p.classList.add("todo");
     div.classList.add("todobox");
@@ -146,11 +162,11 @@ clearButton.addEventListener("click", function () {
 
 //================LOCAL STORAGE=========================================
 
-window.onload = function () {
-    chrome.storage.local.get(["key"], function (result) {
-        console.log("Value currently is ", result);
-    });
-};
+// window.onload = function () {
+//     chrome.storage.local.get(["key"], function (result) {
+//         console.log("Value currently is ", result);
+//     });
+// };
 // let value = "FIRST TODO";
 // chrome.storage.sync.set({ key: "TODO" }, function () {
 //     console.log("Value is set to " + value);
