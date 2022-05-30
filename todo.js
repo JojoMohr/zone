@@ -14,14 +14,7 @@ function get_todos() {
     return todos;
 }
 
-function get_color() {
-    var color = localStorage.getItem("color");
-    return color;
-}
-function get_fontColor() {
-    var color = localStorage.getItem("fontColor");
-    return color;
-}
+
 function add() {
     var audio = new Audio("button.mp3");
     audio.play();
@@ -50,115 +43,16 @@ function removee() {
     return false;
 }
 
-function redcolorChange() {
-    localStorage.setItem("color", "#963019");
-    localStorage.setItem("titleColor", "#16174f");
-    show();
-    document.getElementById("task").focus();
-}
-function blackFont() {
-    localStorage.setItem("fontColor", "black");
-    show();
-    document.getElementById("task").focus();
-}
-function whiteFont() {
-    localStorage.setItem("fontColor", "white");
-    show();
-    document.getElementById("task").focus();
-}
-function greyFont() {
-    localStorage.setItem("fontColor", "grey");
-    show();
-    document.getElementById("task").focus();
-}
-function greencolorChange() {
-    var color = get_color();
-    localStorage.setItem("color", "#49412c");
-    localStorage.setItem("titleColor", "#97743a");
-    show();
-    document.getElementById("task").focus();
-}
-function bluecolorChange() {
-    localStorage.setItem("color", "#62bcfa");
-    localStorage.setItem("titleColor", "#6534ff");
-    show();
-    document.getElementById("task").focus();
-}
-function pinkcolorChange() {
-    localStorage.setItem("color", "#FFB2AE");
-    localStorage.setItem("titleColor", "#efefef");
-    show();
-    document.getElementById("task").focus();
-}
-function yellowcolorChange() {
-    localStorage.setItem("color", "#aa863a");
-    localStorage.setItem("titleColor", "#49412c");
-    show();
-    document.getElementById("task").focus();
-}
-function cyancolorChange() {
-    localStorage.setItem("color", "#20b2aa");
-    localStorage.setItem("titleColor", "#49412c");
-    show();
-    document.getElementById("task").focus();
-}
-function setup() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        console.log("hey");
-    }
-    function showPosition(position) {
-        lat = position.coords.latitude;
-        lon = position.coords.longitude;
-        console.log(lat, lon);
-    }
 
-    noCanvas();
 
-    //  getLocation();
-}
 
-function draw() {
-    if (typeof lat != "undefined") {
-        weatherAsk();
-    } else if (typeof lat == "undefined") {
-        console.log("error");
-    }
-    if (typeof lon != "undefined") {
-        remove();
-    }
-}
-
-function weatherAsk() {
-    url = api + lat + "&lon=" + lon + apiKey;
-    console.log(url);
-    loadJSON(url, gotData);
-}
-
-function gotData(data) {
-    var weather = data;
-    temp = Math.round(weather.main.temp * (9 / 5) + 32) + " F°";
-    des = weather.weather[0].description;
-    var name = weather.name;
-    document.getElementById("weather").innerHTML = temp;
-    document.getElementById("des").innerHTML = des;
-    document.getElementById("city").innerHTML = name;
-    localStorage.setItem("temp", temp);
-    document.getElementById("loader").style.display = "none";
-}
 
 function show() {
     var todos = get_todos();
-    var color = get_color();
-    var titleColor = localStorage.getItem("titleColor");
-    var fontColor = get_fontColor();
     l1 = todos.length;
     document.getElementById("title").style.color = titleColor;
-    document.getElementById("date").style.color = titleColor;
     document.getElementById("add").style.color = titleColor;
     document.getElementById("task").style.color = titleColor;
-    document.getElementById("body").style.backgroundColor = color;
     document.getElementById("todos").style.color = fontColor;
     var html = "<ul>";
     for (var i = 0; i < todos.length; i++) {
@@ -179,10 +73,7 @@ function show() {
         buttons[i].addEventListener("click", removee);
     }
 }
-function motivation() {
-    var audio = new Audio("JUST DO IT.mp3");
-    audio.play();
-}
+
 document.getElementById("task").addEventListener("keyup", function (event) {
     event.preventDefault();
     if (event.keyCode == 13) {

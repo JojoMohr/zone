@@ -80,46 +80,56 @@ if (soundgrid.classList.contains("on")) {
     slide2.classList.add("on");
 }
 
-/////// TODOLISTE
-// let todoswrapper = $("#todoswrapper");
+/////// /////// /////// /////// /////// /////// /////// ///////  //////
+///////                          TODOLISTE                        /////
+/////// /////// /////// /////// /////// /////// /////// /////// ///////
+
 let todoInput = document.querySelector("#todoinput");
 let todoswrapper = document.querySelector("#todoswrapper");
-todoInput.addEventListener("keydown", function (e) {
+
+///========= GET TODOS =====================================
+
+//==========================================================================
+
+//==========================================================================
+//=== TODOS ON PUPUOP=====
+let checkbox;
+function createTodoElement(todo) {
     let div = document.createElement("div");
     let p = document.createElement("p");
-    let text = document.createTextNode(`♥  ${todoInput.value}`);
-    let input = document.createElement("input");
-    // console.log(text);
+    let text = document.createTextNode(`♥  ${todo}`);
+    checkbox = document.createElement("input");
+
     p.classList.add("todo");
     div.classList.add("todobox");
-    input.classList.add("checkbox");
-    input.setAttribute("type", "checkbox");
+    checkbox.classList.add("checkbox");
+    checkbox.setAttribute("type", "checkbox");
 
     p.appendChild(text);
     div.appendChild(p);
-    div.appendChild(input);
-    let allTodosFromLocal = localStorage.getItem("todo");
-    allTodosFromLocal = JSON.parse(allTodosFromLocal);
+    div.appendChild(checkbox);
+    return div;
+}
+//==========================================================================
+
+//==========================================================================
+function getAllTodos() {
+    let allToDosInLocal = localStorage.getItem("todo")
+        ? JSON.parse(localStorage.getItem("todo"))
+        : [];
+    return allToDosInLocal;
+}
+getAllTodos();
+
+let allToDos = [];
+//============= ADD TODO ON ENTER =========================
+todoInput.addEventListener("keydown", function (e) {
+    let div = createTodoElement(todoInput.value);
+    let allToDosInLocal = getAllTodos();
     if (e.keyCode === 13 && todoInput.value !== "") {
-        console.log("ALL TODOS FROM LOCAL", allTodosFromLocal);
-
-        localStorage.setItem(
-            "todo",
-            JSON.stringify([...allTodosFromLocal, todoInput.value])
-        );
-        console.log("ALL TODOS", allTodosFromLocal);
-
-        // try {
-        //     chrome.storage.local.set({ todo: todoInput.value }, function () {
-        //         console.log("Todo is set to ", todoInput.value);
-        //         chrome.storage.local.get(["todo"], function (text) {
-        //             console.log("Todo currently is ", text);
-        //         });
-        //     });
-        // } catch (error) {
-        //     console.log("ERROR IN CATCH", error);
-        // }
-
+        allToDos = [...allToDosInLocal, todoInput.value];
+        console.log("allToDos:", allToDos);
+        localStorage.setItem("todo", JSON.stringify(allToDos));
         todoswrapper.appendChild(div);
         todoInput.value = "";
     }
@@ -152,34 +162,39 @@ addButton.addEventListener("click", function () {
     }
 });
 
+//==============DELETE BUTTON =============================
+
 let clearButton = document.querySelector("#clearbutton");
 clearButton.addEventListener("click", function () {
     console.log("REMOVE");
     todoswrapper.innerHTML = "";
-    counter = 0;
     todoInput.value = "";
 });
+//================================================================
+function showTodos() {
+    let allToDosInLocal = getAllTodos();
 
+    for (let i = 0; i < allToDosInLocal.length; i++) {
+        let div = createTodoElement(allToDosInLocal[i]);
+        // console.log("ALLTODOS IN MAP TODOS", allToDosInLocal[i]);
+        todoswrapper.appendChild(div);
+        div.lastChild.addEventListener("click", function (e) {
+            storage.removeItem(e.target.parentNode);
+
+            setTimeout(() => {
+                e.target.parentNode.remove();
+            }, 500);
+
+            console.log("CLICKED ON CHECKBOC");
+        });
+        console.log("DIV", div.lastChild);
+    }
+}
+showTodos();
+
+//==============REMOVE ON CHECKBBOX=============================
+// function removeOnChecked(event) {
+//     if (event.target.checked)
+//         allToDos = allToDos.filter((item) => item != event);
+// }
 //================LOCAL STORAGE=========================================
-
-// window.onload = function () {
-//     chrome.storage.local.get(["key"], function (result) {
-//         console.log("Value currently is ", result);
-//     });
-// };
-// let value = "FIRST TODO";
-// chrome.storage.sync.set({ key: "TODO" }, function () {
-//     console.log("Value is set to " + value);
-// });
-
-// chrome.storage.sync.get(["key"], function (result) {
-//     console.log("Value currently is " + result.key);
-// });
-// let value = "FIRST TODO";
-// chrome.storage.local.set({ todo: value }, function () {
-//     console.log("Value is set to " + value);
-// });
-
-// chrome.storage.local.get(["key"], function (result) {
-//     console.log("Value currently is " + result.key);
-// });
