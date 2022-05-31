@@ -210,6 +210,9 @@ button {
     width: 35px;
 }
 
+.active {
+    border: 2px solid black;
+}
 /* Hier könnte man auch überlegen, 
 mit classen wie moveleft-400 moveleft-800 moveleft-1200 
 und diese klassen dann anstelle von on off zu benutzten */

@@ -14,7 +14,6 @@ function get_todos() {
     return todos;
 }
 
-
 function add() {
     var audio = new Audio("button.mp3");
     audio.play();
@@ -33,7 +32,6 @@ function add() {
     return false;
 }
 function removee() {
- 
     var id = this.getAttribute("id");
     var todos = get_todos();
     todos.splice(id, 1);
@@ -42,9 +40,14 @@ function removee() {
     return false;
 }
 
-
-
-
+// function removee() {
+//     var id = this.getAttribute("id");
+//     var todos = allToDos;
+//     todos.splice(id, 1);
+//     localStorage.setItem("todo", JSON.stringify(todos));
+//     show();
+//     return false;
+// }
 
 function show() {
     var todos = get_todos();

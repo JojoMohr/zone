@@ -20,6 +20,23 @@ let dot1 = document.querySelector("#dot1");
 let dot2 = document.querySelector("#dot2");
 // let dot3 = document.querySelector("#dot3");
 
+tree.addEventListener("click", function () {
+    console.log("CLICK ON TREE");
+    tree.classList.toggle("active");
+});
+
+// tree.addEventListener("click", function () {
+//     console.log("CLICK ON TREE");
+//     let active = fale;
+//     let toogleActive = (active) => (active = !active);
+//     toogleActive();
+//     if (active) {
+//         tree.className.add("active");
+//     } else {
+//         tree.className.remove("active");
+//     }
+// });
+
 ////===================MUTE =============================
 
 mute.addEventListener("click", function () {
@@ -32,7 +49,7 @@ const buttons = document.querySelectorAll(".sound .icon");
 
 buttons.forEach(function (button) {
     button.addEventListener("click", function () {
-        console.log("THIS", this.id);
+        // console.log("THIS", this.id);
         chrome.runtime.sendMessage({ sound: this.id });
     });
 });
@@ -115,19 +132,21 @@ let allToDosInLocal = localStorage.getItem("todo")
     ? JSON.parse(localStorage.getItem("todo"))
     : [];
 
-let allToDos = [];
+console.log("AHAHAHA", allToDosInLocal);
+// let allToDos = [];
 //============= ADD TODO ON ENTER =========================
 todoInput.addEventListener("keydown", function (e) {
     let div = createTodoElement(todoInput.value);
     if (e.keyCode === 13 && todoInput.value !== "") {
-        allToDos = [...allToDosInLocal, todoInput.value];
+        let allToDos = [...allToDosInLocal, todoInput.value];
         console.log("allToDos:", allToDos);
         localStorage.setItem("todo", JSON.stringify(allToDos));
+        console.log("allToDos:", allToDos);
+
         todoswrapper.appendChild(div);
         todoInput.value = "";
     }
 });
-
 //==============ADD BUTTON =============================
 let addButton = document.querySelector("#addbutton");
 
@@ -159,8 +178,13 @@ clearButton.addEventListener("click", function () {
     todoswrapper.innerHTML = "";
     todoInput.value = "";
 });
+
 //================================================================
 function showTodos() {
+    chrome.browserAction.setBadgeText({
+        text: allToDosInLocal.length.toString(),
+    });
+
     for (let i = 0; i < allToDosInLocal.length; i++) {
         let div = createTodoElement(allToDosInLocal[i]);
         todoswrapper.appendChild(div);
@@ -169,7 +193,7 @@ function showTodos() {
                 e.target.parentNode.remove();
             }, 500);
 
-            // allToDos.splice(e.target.parentNode, 1);
+            // allToDos.splice(allToDosInLocal[i], 1);
             // localStorage.setItem("todo", JSON.stringify(allToDos));
             console.log("CLICKED ON CHECKBOC");
         });
