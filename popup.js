@@ -163,24 +163,20 @@ todoInput.addEventListener("keydown", function (e) {
     if (e.keyCode === 13 && todoInput.value !== "") {
         // let allToDos = getAllToDos();
         allToDos.push(todoInput.value);
-        // setBadge();
+        setBadge();
         localStorage.setItem("todo", JSON.stringify(allToDos));
         console.log("allToDos:", allToDos);
         todoswrapper.appendChild(div);
         todoInput.value = "";
         todoswrapper.appendChild(div);
         div.lastChild.addEventListener("click", function (e) {
-            // setBadge();
+            setBadge();
 
             setTimeout(() => {
                 const index = [
                     ...e.target.parentElement.parentElement.children,
                 ].indexOf(e.target.parentElement);
                 e.target.parentNode.remove();
-
-                console.log("PETESTODOS", index);
-                // console.log("E:TARGET", e.target);
-
                 allToDos.splice(index, 1);
                 setBadge();
                 localStorage.setItem("todo", JSON.stringify(allToDos));
@@ -248,7 +244,6 @@ function showTodos() {
             setTimeout(() => {
                 e.target.parentNode.remove();
                 allToDos.splice(i, 1);
-                console.log("ALL TODOS", allToDos);
                 setBadge();
                 localStorage.setItem("todo", JSON.stringify([allToDos]));
             }, 500);
