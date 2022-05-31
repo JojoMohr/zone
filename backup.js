@@ -128,31 +128,23 @@ function createTodoElement(todo) {
 //==========================================================================
 
 //==========================================================================
-let allToDos = localStorage.getItem("todo")
+let allToDosInLocal = localStorage.getItem("todo")
     ? JSON.parse(localStorage.getItem("todo"))
     : [];
 
+console.log("AHAHAHA", allToDosInLocal);
+// let allToDos = [];
 //============= ADD TODO ON ENTER =========================
 todoInput.addEventListener("keydown", function (e) {
     let div = createTodoElement(todoInput.value);
     if (e.keyCode === 13 && todoInput.value !== "") {
-        allToDos.push(todoInput.value);
+        let allToDos = [...allToDosInLocal, todoInput.value];
         console.log("allToDos:", allToDos);
         localStorage.setItem("todo", JSON.stringify(allToDos));
         console.log("allToDos:", allToDos);
 
-        for (let i = 0; i < allToDos.length; i++) {
-            todoswrapper.appendChild(div);
-            div.lastChild.addEventListener("click", function (e) {
-                setTimeout(() => {
-                    e.target.parentNode.remove();
-                    allToDos.splice(i, 1);
-                    localStorage.setItem("todo", JSON.stringify(allToDos));
-                }, 500);
-            });
-            todoswrapper.appendChild(div);
-            todoInput.value = "";
-        }
+        todoswrapper.appendChild(div);
+        todoInput.value = "";
     }
 });
 //==============ADD BUTTON =============================
@@ -182,8 +174,6 @@ addButton.addEventListener("click", function () {
 
 let clearButton = document.querySelector("#clearbutton");
 clearButton.addEventListener("click", function () {
-    localStorage.setItem("todo", JSON.stringify());
-
     console.log("REMOVE");
     todoswrapper.innerHTML = "";
     todoInput.value = "";
@@ -192,22 +182,20 @@ clearButton.addEventListener("click", function () {
 //================================================================
 function showTodos() {
     chrome.browserAction.setBadgeText({
-        text: allToDos.length.toString(),
+        text: allToDosInLocal.length.toString(),
     });
 
-    for (let i = 0; i < allToDos.length; i++) {
-        let div = createTodoElement(allToDos[i]);
-        console.log("I 2", i);
+    for (let i = 0; i < allToDosInLocal.length; i++) {
+        let div = createTodoElement(allToDosInLocal[i]);
         todoswrapper.appendChild(div);
         div.lastChild.addEventListener("click", function (e) {
             setTimeout(() => {
                 e.target.parentNode.remove();
-                allToDos.splice(i, 1);
-                console.log("ALL TODOS", allToDos);
-
-                localStorage.setItem("todo", JSON.stringify(allToDos));
             }, 500);
-            console.log("I", i);
+
+            // allToDos.splice(allToDosInLocal[i], 1);
+            // localStorage.setItem("todo", JSON.stringify(allToDos));
+            console.log("CLICKED ON CHECKBOC");
         });
         console.log("DIV", div.lastChild);
     }
