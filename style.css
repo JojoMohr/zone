@@ -313,6 +313,9 @@ button:hover {
     height: 15px;
     width: 15px;
 }
+.checkbox:hover {
+    cursor: pointer;
+}
 
 /* .checked {
     background-color: tomato;

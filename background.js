@@ -143,30 +143,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
-//================LOCAL STORAGE=========================================
 
-// chrome.storage.sync.get(["key"], function (result) {
-//     console.log("Todo currently is ", result);
-// });
-
-//================LOCAL STORAGE=========================================
-
-// chrome.storage.sync.get(["key"], function (result) {
-//     console.log("Todo currently is ", result);
-// });
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//     // console.log("REQUEST: ", request);
-//     if (request != "timer") return;
-
-//     if (request == "timer" ) {
-//         console.log("BG  TREE PLAYING");
-//         treeSound.play();
-//     } else {
-//         treeSound.pause();
-//         console.log("BG  TREE PAUSE");
-//         treeSound.currentTime = 0;
-//     }
-// });
 
 let startingTime = null;
 
