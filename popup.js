@@ -3,7 +3,6 @@ chrome.storage.local.get(["todo"], function (text) {
     console.log("Todo currently is ", text);
 });
 
-localStorage.setItem("TESTODO", "grey");
 let mute = document.querySelector("#mute");
 let right = document.querySelector("#right");
 let tree = document.querySelector("#tree");
@@ -131,21 +130,30 @@ function createTodoElement(todo) {
 let allToDos = localStorage.getItem("todo")
     ? JSON.parse(localStorage.getItem("todo"))
     : [];
+localStorage.setItem("todo", [allToDos]);
+// function getAllToDos() {
+//     var allToDos = new Array();
+//     var allToDosString = localStorage.getItem("todo");
+//     if (allToDosString !== null) {
+//         allToDos = JSON.parse(allToDosString);
+//     }
+//     return allToDos;
+// }
 
 //============= ADD TODO ON ENTER =========================
 todoInput.addEventListener("keydown", function (e) {
     let div = createTodoElement(todoInput.value);
     if (e.keyCode === 13 && todoInput.value !== "") {
+        // let allToDos = getAllToDos();
         allToDos.push(todoInput.value);
-        setBadge();
-        console.log("allToDos:", allToDos);
+        // setBadge();
         localStorage.setItem("todo", JSON.stringify(allToDos));
         console.log("allToDos:", allToDos);
         todoswrapper.appendChild(div);
         todoInput.value = "";
         todoswrapper.appendChild(div);
         div.lastChild.addEventListener("click", function (e) {
-            setBadge();
+            // setBadge();
 
             setTimeout(() => {
                 const index = [
@@ -190,8 +198,9 @@ addButton.addEventListener("click", function () {
 
 let clearButton = document.querySelector("#clearbutton");
 clearButton.addEventListener("click", function () {
-    localStorage.setItem("todo", JSON.stringify());
+    localStorage.setItem("todo", JSON.stringify([]));
 
+    // setBadge();
     console.log("REMOVE");
     todoswrapper.innerHTML = "";
     todoInput.value = "";
@@ -199,9 +208,7 @@ clearButton.addEventListener("click", function () {
 
 //================================================================
 function showTodos() {
-    chrome.browserAction.setBadgeText({
-        text: allToDos.length.toString(),
-    });
+    setBadge();
 
     for (let i = 0; i < allToDos.length; i++) {
         let div = createTodoElement(allToDos[i]);
@@ -222,9 +229,13 @@ function showTodos() {
 }
 showTodos();
 function setBadge() {
-    chrome.browserAction.setBadgeText({
-        text: allToDos.length.toString(),
-    });
+    if (allToDos.length > 0) {
+        chrome.browserAction.setBadgeText({
+            text: allToDos.length.toString(),
+        });
+    } else {
+        return;
+    }
 }
 //==============REMOVE ON CHECKBBOX=============================
 // function removeOnChecked(event) {
