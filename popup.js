@@ -24,17 +24,31 @@ tree.addEventListener("click", function () {
     tree.classList.toggle("active");
 });
 
-// tree.addEventListener("click", function () {
-//     console.log("CLICK ON TREE");
-//     let active = fale;
-//     let toogleActive = (active) => (active = !active);
-//     toogleActive();
-//     if (active) {
-//         tree.className.add("active");
-//     } else {
-//         tree.className.remove("active");
-//     }
-// });
+//=============== TIMER //===============//===============
+function startTimer(duration, display) {
+    var timer = duration,
+        minutes,
+        seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    var fiveMinutes = 60 * 5,
+        display = document.querySelector("#timer");
+    startTimer(fiveMinutes, display);
+};
 
 ////===================MUTE =============================
 
@@ -127,18 +141,12 @@ function createTodoElement(todo) {
 //==========================================================================
 
 //==========================================================================
+
 let allToDos = localStorage.getItem("todo")
     ? JSON.parse(localStorage.getItem("todo"))
     : [];
+
 localStorage.setItem("todo", [allToDos]);
-// function getAllToDos() {
-//     var allToDos = new Array();
-//     var allToDosString = localStorage.getItem("todo");
-//     if (allToDosString !== null) {
-//         allToDos = JSON.parse(allToDosString);
-//     }
-//     return allToDos;
-// }
 
 //============= ADD TODO ON ENTER =========================
 todoInput.addEventListener("keydown", function (e) {
@@ -175,22 +183,34 @@ todoInput.addEventListener("keydown", function (e) {
 let addButton = document.querySelector("#addbutton");
 
 addButton.addEventListener("click", function () {
-    let div = document.createElement("div");
-    let p = document.createElement("p");
-    let text = document.createTextNode(`♥  ${todoInput.value}`);
-    let input = document.createElement("input");
+    let div = createTodoElement(todoInput.value);
 
-    p.classList.add("todo");
-    div.classList.add("todobox");
-    input.classList.add("checkbox");
-    input.setAttribute("type", "checkbox");
-
-    p.appendChild(text);
-    div.appendChild(p);
-    div.appendChild(input);
     if (todoInput.value !== "") {
+        // let allToDos = getAllToDos();
+        allToDos.push(todoInput.value);
+        // setBadge();
+        localStorage.setItem("todo", JSON.stringify(allToDos));
+        console.log("allToDos:", allToDos);
         todoswrapper.appendChild(div);
         todoInput.value = "";
+        todoswrapper.appendChild(div);
+        div.lastChild.addEventListener("click", function (e) {
+            // setBadge();
+
+            setTimeout(() => {
+                const index = [
+                    ...e.target.parentElement.parentElement.children,
+                ].indexOf(e.target.parentElement);
+                e.target.parentNode.remove();
+
+                console.log("PETESTODOS", index);
+                // console.log("E:TARGET", e.target);
+
+                allToDos.splice(index, 1);
+                setBadge();
+                localStorage.setItem("todo", JSON.stringify(allToDos));
+            }, 500);
+        });
     }
 });
 
@@ -199,7 +219,7 @@ addButton.addEventListener("click", function () {
 let clearButton = document.querySelector("#clearbutton");
 clearButton.addEventListener("click", function () {
     localStorage.setItem("todo", JSON.stringify([]));
-
+    allToDos = [];
     // setBadge();
     console.log("REMOVE");
     todoswrapper.innerHTML = "";
