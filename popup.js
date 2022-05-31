@@ -4,6 +4,7 @@ chrome.storage.local.get(["todo"], function (text) {
 });
 
 let mute = document.querySelector("#mute");
+
 let right = document.querySelector("#right");
 let tree = document.querySelector("#tree");
 let fire = document.querySelector("#fire");
@@ -11,18 +12,20 @@ let white = document.querySelector("#note");
 let leave = document.querySelector("#leave");
 let rain = document.querySelector("#rain");
 let water = document.querySelector("#water");
+
+//==
 let soundgrid = document.querySelector(".soundgrid");
 let slide2 = document.querySelector(".slide2");
 let slides = document.querySelector(".slides");
-
+let timer = document.querySelector("#timer");
 let dot1 = document.querySelector("#dot1");
 let dot2 = document.querySelector("#dot2");
 // let dot3 = document.querySelector("#dot3");
 
-tree.addEventListener("click", function () {
-    console.log("CLICK ON TREE");
-    tree.classList.toggle("active");
-});
+// tree.addEventListener("click", function () {
+//     console.log("CLICK ON TREE");
+//     tree.classList.toggle("active");
+// });
 
 //=============== TIMER //===============//===============
 function startTimer(duration, display) {
@@ -44,16 +47,21 @@ function startTimer(duration, display) {
     }, 1000);
 }
 
-window.onload = function () {
-    var fiveMinutes = 60 * 5,
+function startTimerOnClick() {
+    var twentyFiveMinutes = 60 * 25,
         display = document.querySelector("#timer");
-    startTimer(fiveMinutes, display);
-};
+    startTimer(twentyFiveMinutes, display);
+}
 
 ////===================MUTE =============================
 
 mute.addEventListener("click", function () {
     chrome.runtime.sendMessage("mute");
+});
+timer.addEventListener("click", function () {
+    console.log("CLICK ON TIMER");
+    startTimerOnClick();
+    chrome.runtime.sendMessage("timer");
 });
 
 ////===================PAUSE PLAY SOUND =============================
@@ -63,6 +71,8 @@ const buttons = document.querySelectorAll(".sound .icon");
 buttons.forEach(function (button) {
     button.addEventListener("click", function () {
         // console.log("THIS", this.id);
+        button.classList.toggle("active");
+
         chrome.runtime.sendMessage({ sound: this.id });
     });
 });
@@ -240,7 +250,7 @@ function showTodos() {
                 allToDos.splice(i, 1);
                 console.log("ALL TODOS", allToDos);
                 setBadge();
-                localStorage.setItem("todo", JSON.stringify(allToDos));
+                localStorage.setItem("todo", JSON.stringify([allToDos]));
             }, 500);
             console.log("I", i);
         });
@@ -263,3 +273,17 @@ function setBadge() {
 //         allToDos = allToDos.filter((item) => item != event);
 // }
 //================LOCAL STORAGE=========================================
+
+window.onload = function () {
+    chrome.runtime.sendMessage("getPlayingSounds", (playingSounds) => {
+        // loop over the playing sounds and highlight elements accordingly
+        console.log("getPlayingSounds", playingSounds);
+        // LOOP OVER ARRAY OF PLAYING SOUND AND ADD classNamer to each
+        // console.log("BUTTON", button);
+
+        playingSounds.forEach((id) => {
+            const button = document.getElementById(id);
+            button.classList.toggle("active");
+        });
+    });
+};

@@ -39,6 +39,15 @@ let audio = [
     waterSound,
 ];
 
+const sounds = {
+    tree: treeSound,
+    fire: fireSound,
+    leave: leaveSound,
+    note: whiteNoise,
+    rain: rainSound,
+    water: waterSound,
+};
+
 //  LOOP SOUNDS ///////////////////////////////
 
 for (let i = 0; i < audio.length; i++) {
@@ -63,75 +72,37 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }
     }
 });
+
+//===================GET PLAYING SOUNDS =============================
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request !== "getPlayingSounds") {
+        return;
+    }
+    const playing = Object.entries(sounds)
+        .filter(([key, sound]) => !sound.paused)
+        .map(([key]) => key);
+
+    sendResponse(playing);
+});
 //===================PAUSE PLAY SOUND =============================
-var soundPlaying = false;
-
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    // console.log("REQUEST: ", request);
-    if (request.sound != "tree") return;
-
-    if (request.sound == "tree" && treeSound.paused) {
-        console.log("BG  TREE PLAYING");
-        treeSound.play();
-    } else {
-        treeSound.pause();
-        console.log("BG  TREE PAUSE");
-        treeSound.currentTime = 0;
+    console.log("REQUEST: ", request);
+    if (!request.sound) {
+        return;
     }
-});
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.sound != "fire") return;
 
-    if (request.sound == "fire" && fireSound.paused) {
-        fireSound.play();
-        console.log("BG  FIRE PLAYING");
-    } else {
-        fireSound.pause();
-        fireSound.currentTime = 0;
+    const soundToPlay = sounds[request.sound];
+
+    if (!soundToPlay) {
+        return;
     }
-});
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.sound != "leave") return;
-
-    if (request.sound == "leave" && leaveSound.paused) {
-        leaveSound.play();
-        console.log("BG  leave PLAYING");
+    if (soundToPlay.paused) {
+        console.log(`BG ${request.sound} PLAYING`);
+        soundToPlay.play();
     } else {
-        leaveSound.pause();
-        leaveSound.currentTime = 0;
-    }
-});
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.sound != "note") return;
-
-    if (request.sound == "note" && whiteNoise.paused) {
-        whiteNoise.play();
-        console.log("BG  whiteNoise PLAYING");
-    } else {
-        whiteNoise.pause();
-        whiteNoise.currentTime = 0;
-    }
-});
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.sound != "rain") return;
-
-    if (request.sound == "rain" && rainSound.paused) {
-        rainSound.play();
-        console.log("BG  rain PLAYING");
-    } else {
-        rainSound.pause();
-        rainSound.currentTime = 0;
-    }
-});
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.sound != "water") return;
-
-    if (request.sound == "water" && waterSound.paused) {
-        waterSound.play();
-        console.log("BG  water PLAYING");
-    } else {
-        waterSound.pause();
-        waterSound.currentTime = 0;
+        soundToPlay.pause();
+        console.log(`BG ${request.sound} PAUSE`);
+        soundToPlay.currentTime = 0;
     }
 });
 
@@ -177,3 +148,31 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 // chrome.storage.sync.get(["key"], function (result) {
 //     console.log("Todo currently is ", result);
 // });
+
+//================LOCAL STORAGE=========================================
+
+// chrome.storage.sync.get(["key"], function (result) {
+//     console.log("Todo currently is ", result);
+// });
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//     // console.log("REQUEST: ", request);
+//     if (request != "timer") return;
+
+//     if (request == "timer" ) {
+//         console.log("BG  TREE PLAYING");
+//         treeSound.play();
+//     } else {
+//         treeSound.pause();
+//         console.log("BG  TREE PAUSE");
+//         treeSound.currentTime = 0;
+//     }
+// });
+
+let startingTime = null;
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request !== "startTimer") {
+        return;
+    }
+    startingTime = new Date();
+});

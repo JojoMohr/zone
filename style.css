@@ -125,7 +125,7 @@ button:active {
 
 .icon:hover {
     animation: popout 1s ease;
-    border: white 3px solid;
+    border: black 2px solid;
     cursor: pointer;
 }
 
@@ -205,7 +205,7 @@ button {
     /* border: white 2px solid; */
     border: white solid 2px;
     background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 40%;
+    border-radius: 15px;
     height: 30px;
     width: 35px;
 }
@@ -272,6 +272,11 @@ button:hover {
     background-color: rgba(255, 255, 255, 0.37);
 }
 
+::-webkit-scrollbar-thumb {
+    width: 10px;
+    background-color: #ffbca5;
+}
+
 #todoHeading {
     display: flex;
     width: 98%;
@@ -317,4 +322,5 @@ button:hover {
 
 #timer {
     color: black;
+    width: 45px;
 }
