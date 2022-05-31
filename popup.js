@@ -137,22 +137,30 @@ todoInput.addEventListener("keydown", function (e) {
     let div = createTodoElement(todoInput.value);
     if (e.keyCode === 13 && todoInput.value !== "") {
         allToDos.push(todoInput.value);
+        setBadge();
         console.log("allToDos:", allToDos);
         localStorage.setItem("todo", JSON.stringify(allToDos));
         console.log("allToDos:", allToDos);
+        todoswrapper.appendChild(div);
+        todoInput.value = "";
+        todoswrapper.appendChild(div);
+        div.lastChild.addEventListener("click", function (e) {
+            setBadge();
 
-        for (let i = 0; i < allToDos.length; i++) {
-            todoswrapper.appendChild(div);
-            div.lastChild.addEventListener("click", function (e) {
-                setTimeout(() => {
-                    e.target.parentNode.remove();
-                    allToDos.splice(i, 1);
-                    localStorage.setItem("todo", JSON.stringify(allToDos));
-                }, 500);
-            });
-            todoswrapper.appendChild(div);
-            todoInput.value = "";
-        }
+            setTimeout(() => {
+                const index = [
+                    ...e.target.parentElement.parentElement.children,
+                ].indexOf(e.target.parentElement);
+                e.target.parentNode.remove();
+
+                console.log("PETESTODOS", index);
+                // console.log("E:TARGET", e.target);
+
+                allToDos.splice(index, 1);
+                setBadge();
+                localStorage.setItem("todo", JSON.stringify(allToDos));
+            }, 500);
+        });
     }
 });
 //==============ADD BUTTON =============================
@@ -204,7 +212,7 @@ function showTodos() {
                 e.target.parentNode.remove();
                 allToDos.splice(i, 1);
                 console.log("ALL TODOS", allToDos);
-
+                setBadge();
                 localStorage.setItem("todo", JSON.stringify(allToDos));
             }, 500);
             console.log("I", i);
@@ -213,7 +221,11 @@ function showTodos() {
     }
 }
 showTodos();
-
+function setBadge() {
+    chrome.browserAction.setBadgeText({
+        text: allToDos.length.toString(),
+    });
+}
 //==============REMOVE ON CHECKBBOX=============================
 // function removeOnChecked(event) {
 //     if (event.target.checked)
