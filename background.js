@@ -30,6 +30,8 @@ let whiteNoise = new Audio("sounds/white-noise.wav");
 let rainSound = new Audio("sounds/rain-audio.mp3");
 let waterSound = new Audio("sounds/water-audio.mp3");
 
+let timerSound = new Audio("sounds/timer.mp3");
+
 let audio = [
     treeSound,
     fireSound,
@@ -152,4 +154,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     startingTime = new Date();
     console.log("STARING TIME", startingTime);
     sendResponse(startingTime);
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request !== "getTime") {
+        return;
+    }
+
+    sendResponse(startingTime);
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request !== "stopTimer") {
+        return;
+    }
+    timerSound.play();
+    startingTime = null;
 });

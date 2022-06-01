@@ -28,11 +28,13 @@ let dot2 = document.querySelector("#dot2");
 // });
 
 //=============== TIMER //===============//===============
+let intevallId = null;
 function startTimer(duration, display) {
     var timer = duration,
         minutes,
         seconds;
-    setInterval(function () {
+
+    intevallId = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
@@ -43,13 +45,17 @@ function startTimer(duration, display) {
 
         if (--timer < 0) {
             timer = duration;
+            chrome.runtime.sendMessage("stopTimer");
+            clearInterval(intevallId);
         }
     }, 1000);
 }
 
 function startTimerOnClick() {
-    var twentyFiveMinutes = 60 * 25,
-        display = document.querySelector("#timer");
+    var twentyFiveMinutes = 60 * 25;
+    display = document.querySelector("#timer");
+    clearInterval(intevallId);
+
     startTimer(twentyFiveMinutes, display);
 }
 
@@ -61,8 +67,9 @@ mute.addEventListener("click", function () {
 timer.addEventListener("click", function () {
     console.log("CLICK ON TIMER");
     startTimerOnClick();
-    chrome.runtime.sendMessage("startTimer");
-    console.log("Response in POPUP", request);
+    chrome.runtime.sendMessage("startTimer", (startingTime) => {
+        console.log("STARING TIME", startingTime);
+    });
 });
 
 ////===================PAUSE PLAY SOUND =============================
@@ -272,7 +279,6 @@ function setBadge() {
 //         allToDos = allToDos.filter((item) => item != event);
 // }
 //================LOCAL STORAGE=========================================
-
 window.onload = function () {
     chrome.runtime.sendMessage("getPlayingSounds", (playingSounds) => {
         // loop over the playing sounds and highlight elements accordingly
@@ -281,5 +287,18 @@ window.onload = function () {
             const button = document.getElementById(id);
             button.classList.toggle("active");
         });
+    });
+    chrome.runtime.sendMessage("getTime", (time) => {
+        if (!time) {
+            return;
+        }
+        var t1 = new Date(time);
+        var t2 = new Date();
+        var dif = (t2.getTime() - t1.getTime()) / 1000;
+        console.log(dif);
+        console.log("TIME", time);
+        var twentyFiveMinutes = 60 * (25 - dif / 60),
+            display = document.querySelector("#timer");
+        startTimer(twentyFiveMinutes, display);
     });
 };
