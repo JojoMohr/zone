@@ -61,7 +61,8 @@ mute.addEventListener("click", function () {
 timer.addEventListener("click", function () {
     console.log("CLICK ON TIMER");
     startTimerOnClick();
-    chrome.runtime.sendMessage("timer");
+    chrome.runtime.sendMessage("startTimer");
+    console.log("Response in POPUP", request);
 });
 
 ////===================PAUSE PLAY SOUND =============================
@@ -226,6 +227,7 @@ clearButton.addEventListener("click", function () {
     localStorage.setItem("todo", JSON.stringify([]));
     allToDos = [];
     setBadge();
+
     console.log("REMOVE");
     todoswrapper.innerHTML = "";
     todoInput.value = "";
@@ -244,8 +246,8 @@ function showTodos() {
             setTimeout(() => {
                 e.target.parentNode.remove();
                 allToDos.splice(i, 1);
-                setBadge();
                 localStorage.setItem("todo", JSON.stringify(allToDos));
+                setBadge();
             }, 500);
             console.log("I", i);
         });
@@ -256,7 +258,7 @@ function showTodos() {
 showTodos();
 
 function setBadge() {
-    if (allToDos.length > 0) {
+    if (allToDos.length >= 0) {
         chrome.browserAction.setBadgeText({
             text: allToDos.length.toString(),
         });

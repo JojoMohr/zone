@@ -106,7 +106,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
-// ADJUST VOLUME //////////////////////////////
+//===================ADJUST VOLUME =============================
 let volTree = document.querySelector("#volTree");
 let volFire = document.querySelector("#volFire");
 let volWhite = document.querySelector("#volWhite");
@@ -143,8 +143,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
-
-
 let startingTime = null;
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -152,4 +150,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         return;
     }
     startingTime = new Date();
+    console.log("STARING TIME", startingTime);
+    sendResponse(startingTime);
 });
