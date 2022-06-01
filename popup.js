@@ -193,14 +193,14 @@ addButton.addEventListener("click", function () {
     if (todoInput.value !== "") {
         // let allToDos = getAllToDos();
         allToDos.push(todoInput.value);
-        // setBadge();
+        setBadge();
         localStorage.setItem("todo", JSON.stringify(allToDos));
         console.log("allToDos:", allToDos);
         todoswrapper.appendChild(div);
         todoInput.value = "";
         todoswrapper.appendChild(div);
         div.lastChild.addEventListener("click", function (e) {
-            // setBadge();
+            setBadge();
 
             setTimeout(() => {
                 const index = [
@@ -225,7 +225,7 @@ let clearButton = document.querySelector("#clearbutton");
 clearButton.addEventListener("click", function () {
     localStorage.setItem("todo", JSON.stringify([]));
     allToDos = [];
-    // setBadge();
+    setBadge();
     console.log("REMOVE");
     todoswrapper.innerHTML = "";
     todoInput.value = "";
@@ -245,7 +245,7 @@ function showTodos() {
                 e.target.parentNode.remove();
                 allToDos.splice(i, 1);
                 setBadge();
-                localStorage.setItem("todo", JSON.stringify([allToDos]));
+                localStorage.setItem("todo", JSON.stringify(allToDos));
             }, 500);
             console.log("I", i);
         });
