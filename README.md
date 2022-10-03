@@ -4,8 +4,8 @@ This app will you help to focus on stuff that matters. Calm backgroundnoises and
 
 
 
-https://user-images.githubusercontent.com/99038739/182124118-ca3d1239-24b1-4c0e-b08b-6ddf5eb2b407.mp4
 
+/Users/johannesmohr/Desktop/Spiced/Repositories/portfolio/portfolio/public/img/gifs/zone.gif
 
 
 Unfortunately Manifest V3 does not allow sounds to be played from the background script. Therefore the extension can as of now only be installed manually. 
