@@ -3,9 +3,9 @@
 This app will you help to focus on stuff that matters. Calm backgroundnoises and a simple Todolist will guide you through your productiv day!
 
 
+![zone](https://user-images.githubusercontent.com/99038739/193660049-ac2554dd-303f-42ce-b92d-432c3102e104.gif)
 
 
-/Users/johannesmohr/Desktop/Spiced/Repositories/portfolio/portfolio/public/img/gifs/zone.gif
 
 
 Unfortunately Manifest V3 does not allow sounds to be played from the background script. Therefore the extension can as of now only be installed manually. 
